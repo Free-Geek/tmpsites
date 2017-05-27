@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Wrapper around ssh, that knows how to connect to the remote instance
+
+function die {
+  echo "$0" >&2
+  exit 1
+}
+
+cd `dirname "$0"`
+this_dir=`pwd`
+cd ../../
+project_dir=`pwd`
+ssh=`which ssh`
+
+config_file=$project_dir/config
+test -f $config_file || die "No $config_file file found"
+
+# Imports $ssh_remote
+eval `cat config`
+
+private_key_file=$project_dir/private_key
+test -f $private_key_file || die "No $private_key_file file found"
+
+$ssh -i $private_key_file $ssh_remote $@

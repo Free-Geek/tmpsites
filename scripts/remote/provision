@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function die {
+  echo "$0" >&2
+  exit 1
+}
+
+cd `dirname "$0"`
+cd ../../
+
+./scripts/remote/upload || die "Failed to upload"
+./scripts/remote/ssh "./scripts/provision" || die "Failed to provision"

@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+echo "Provisioning..."
+
+function install_prerequisites {
+  sudo apt-get update -y
+  sudo apt-get install nginx -y
+  sudo apt-get install mysecureshell -y
+}
+
+function configure_sshd {
+  if ! ( grep 'PasswordAuthentication yes' /etc/ssh/sshd_config > /dev/null ); then
+    sudo sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+    sudo systemctl reload sshd
+  fi
+}
+
+install_prerequisites
+configure_sshd
+crontab $HOME/scripts/files/crontab

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd `dirname "$0"`
+this_dir=`pwd`
+cd ../../
+project_dir=`pwd`
+
+config_file=$project_dir/config
+test -f $config_file || die "No $config_file file found"
+
+eval `cat config`
+
+rsync -av \
+  -e "ssh -i ./private_key" \
+  ./scripts/server/ \
+  ./config \
+  "$ssh_remote:~/scripts/"

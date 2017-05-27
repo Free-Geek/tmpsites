@@ -1,0 +1,117 @@
+#!/bin/bash -e
+
+function usage {
+  echo "Usage: $0 NUM_SITES"
+  exit 2
+}
+
+if [ -z "$1" ]; then
+  usage
+fi
+if [ "$1" -lt 1 ]; then
+  usage
+fi
+num_users=$1
+
+function read_config {
+  cd
+  config_file=./scripts/config
+  test -f $config_file || die "No $config_file file found"
+
+  # Imports $root_hostname
+  eval `cat $config_file`
+}
+
+function remove_previous_sites {
+  cd
+  if [ -f ~/sites ]; then
+    ./scripts/remove_sites
+  fi
+}
+
+function build_sites_list {
+  ( test -f ~/sites && rm ~/sites ) || /bin/true
+  n=1
+  while [[ $n -le $num_users ]]; do
+    echo "site$n" >> ~/sites
+    n=$((n+1))
+  done
+}
+
+function restart_webserver {
+  # Restart nginx
+  sudo touch /etc/nginx/nginx.conf
+  sudo systemctl restart nginx
+}
+
+function generate_password {
+  openssl rand -base64 32 | sed 's|^\(.....\).*|\1|'
+}
+
+function add_site_user {
+  name=$1
+  password=`generate_password`
+  sudo useradd -m -s /usr/bin/mysecureshell $name
+  echo "$name:$password" | sudo chpasswd
+  echo "$name:$password" >> ~/passwords
+}
+
+function configure_site_web {
+  name=$1
+  hostname="$name.$root_hostname"
+
+  # Site web config
+  conf_file=/etc/nginx/sites-available/$name.$root_hostname.conf
+  sudo cp scripts/files/nginx-site.conf $conf_file
+  sudo sed -i "s/-HOSTNAME-/$hostname/" $conf_file
+
+  cd /etc/nginx/sites-enabled
+  test -h $name.$root_hostname.conf || sudo ln -s ../sites-available/$name.$root_hostname.conf $name.$root_hostname.conf
+
+  restart_webserver
+}
+
+function web_directory {
+  name=$1
+  # Site web directory
+  sudo mkdir -p /var/www/$name.$root_hostname
+  sudo chown $name:$name /var/www/$name.$root_hostname
+
+  # Link web directory to user's $HOME
+  dest=/home/$name/site
+  test -h $dest || sudo ln -s /var/www/$name.$root_hostname $dest
+}
+
+function web_sample_files {
+  name=$1
+  cd
+  hostname=$name.$root_hostname
+  dest=/var/www/$hostname/index.html
+  sudo cp ./scripts/files/site/index.html $dest
+  sudo sed -i "s/-HOSTNAME-/$hostname/" $dest
+  sudo chown $name:$name $dest
+}
+
+function configure_site {
+  name=$1
+  add_site_user $name
+  configure_site_web $name
+  web_directory $name
+  web_sample_files $name
+}
+
+function configure_sites {
+  while read site; do
+    configure_site $site
+  done < ~/sites
+}
+
+read_config
+remove_previous_sites
+build_sites_list
+( test -f ~/passwords && rm ~/passwords ) || /bin/true
+configure_sites
+echo
+echo "Users/Passwords:"
+cat ~/passwords
+rm ~/passwords

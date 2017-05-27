@@ -1,0 +1,24 @@
+#!/bin/bash
+
+function die {
+  echo "$0" >&2
+  exit 1
+}
+
+function usage {
+  echo "Usage: $0 NUM_SITES"
+  exit 2
+}
+
+if [ -z "$1" ]; then
+  usage
+fi
+if [ "$1" -lt 1 ]; then
+  usage
+fi
+
+cd `dirname "$0"`
+cd ../../
+
+./scripts/remote/upload || die "Failed to upload"
+./scripts/remote/ssh "./scripts/add_sites $1" || die "Failed to add sites"
