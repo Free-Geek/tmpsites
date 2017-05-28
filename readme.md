@@ -149,5 +149,5 @@ The web accounts will be removed automatically, after 3 hours, or after whatever
 would like to remove the right away, run this:
 
 ```shell
-./script/remote/remove_sites
+./client/remove_sites
 ```
