@@ -1,25 +1,28 @@
 ## What
 
-`tmpsites` is a set of scripts that remotely creates temporary, disposable web hosting accounts, with individual SFTP access.
-This is very useful for a classroom situation for teaching the basics of web development.
+`tmpsites` is a tool for creating temporary, disposable web hosting accounts.
+It is useful for a classroom situation, such as when teaching the basics of web development.
 
-The web accounts are automatically deleted after 3 hours.
+Each web account has a hostname, SFTP access, and a generated password.
+Accounts are automatically deleted after 3 hours or a configurable timeframe.
 
-The server-side scripts have been tested with Amazon EC2, with an Ubuntu 16.04 "micro" instance.
-
-The client-side scripts have been tested on macOS 10.12.
+The tool consists of client-side commands and server code.
+Everything is controlled from the client-side commands.
+The client commands have been tested on macOS 10.12.
+The server code has been tested on an Amazon EC2 "micro" instance with Ubuntu 16.04.
 
 ## How it works
 
-1. `client/provision` provisions a server with the necessary base software and configuration.
-2. `client/add_accounts` creates user accounts and corresponding web configurations.
+1. The `client/provision` command provisions a server with the necessary base software and configuration.
+2. The `client/add_accounts` command creates user accounts and corresponding web configurations.
   Then it prints the usernames and their generated passwords for distribution.
 
 The usernames of the accounts created will have the form "siteN", where N is a number
-starting from 1.
+starting from 1. For example: `site1`, `site2`, `site3`.
 
 The web virtual hosts will be configured with the hostname "siteN.example.com",
-corresponding to each user account.
+corresponding to each user account. For example: `site1.example.com`, `site2.example.com`,
+`site3.example.com`.
 
 ## Instructions
 
@@ -34,7 +37,11 @@ cd tmpsites
 
 Amazon EC2 is the only tested provider at this time. Other providers may work too (see below).
 
-Create a micro instance with Ubuntu 16.04. By default, it will have very limited network access,
+Create a micro instance with Ubuntu 16.04. Complete all the
+steps of the creation process, rather than skipping to
+the end.
+
+By default, it will have very limited network access,
 based on your IP address at the time of creation. If you use the creation wizard
 to create the instance, you will have the opportunity near the end of the wizard
 to open ports 22 and 80 to all address. If you didn't do that, after the fact:
@@ -46,7 +53,8 @@ to open ports 22 and 80 to all address. If you didn't do that, after the fact:
   select "Networking", and then "Change Security Groups".
 * Assign the instance to the new security group
 
-You will need the PEM file that was offered to you for download.
+At the end of the instance creation, you will be prompted to either provide an SSH public key or
+download a generated PEM file. If you're not sure, just download the PEM file.
 
 ### Other providers
 
@@ -54,8 +62,8 @@ Making this work with other providers shouldn't be much problem, as long as the
 OS distribution is Ubuntu 16.04 or similar.
 Make sure that the default account on the server can run unlimited sudo commands without a password.
 
-Unless your provider already does so for you, you may need to generate an
-SSH keypair, and upload the public key to the server.
+You will also need to have an SSH key-pair in place,
+as described [here](http://www.linuxproblem.org/art_9.html).
 
 ### DNS Configuration
 
@@ -84,6 +92,10 @@ It's probably best set it up this way:
   * Host: siteN (where N is a number starting from 1)
   * Points to: site.example.com
 
+The advantage to using CNAME records is if you switch to
+a different server with a different IP address, you only
+need to change the one 'A' record.
+
 ### Configure
 
 Copy the file `config.sample` to `config`:
@@ -94,24 +106,16 @@ cp config.sample config
 
 Edit the file and change the settings:
 
-`root_hostname`:
-
-Let's say one of the sites generated is `site1.example.com`. The root hostname
+`root_hostname`: Let's say one of the sites generated is `site1.example.com`. The root hostname
 for that would be `example.com`. Of course, you will need to have `example.com`
 registered.
 
-`ssh_remote`:
-
-This is the server's admin username and server's default hostname,
+`ssh_remote`: This is the server's admin username and server's default hostname,
 joined with a '@'. This is used as part of an SSH command or Rsync.
 
-`num_accounts`:
+`num_accounts`: This is the number of web accounts to create.
 
-This is the number of sites to create.
-
-`accounts_ttl`:
-
-Amount of time the website accounts have to live. The format of this setting
+`accounts_ttl`: Amount of time the website accounts have to live. The format of this setting
 is exactly the format used in the `date` command to calculate date arithmetic.
 
 ### Create the private_key file
@@ -134,10 +138,12 @@ Run the following:
 ./client/provision
 ```
 
-This installs the dependencies, such as nginx and mysecureshell,
+This installs the dependencies, such as
+[nginx](https://www.nginx.com/resources/wiki/)
+and [mysecureshell](https://mysecureshell.readthedocs.io/en/latest/),
 and configures them.
 
-It also installs the crontab that regularly checks for web hosting
+It also installs a [crontab](https://www.computerhope.com/unix/ucrontab.htm) command that regularly checks for web hosting
 accounts that have expired, and it deletes them.
 
 ### Add web accounts
@@ -151,7 +157,7 @@ Run the following:
 The above command adds sites to the server. The number of sites is
 dependent on `num_accounts`, in the `config` file.
 
-Now visit: site1.example.com, or whatever your first site is called.
+Now visit: `site1.example.com`, or whatever your first site is called.
 
 You should see a webpage with the words "Welcome to site1.example.com!"
 
@@ -161,7 +167,7 @@ way for the new ones.
 ### Remove web accounts
 
 The web accounts will be removed automatically, after 3 hours, or after whatever `accounts_ttl` is set to, but if you
-would like to remove the right away, run this:
+would like to remove them right away, run this:
 
 ```shell
 ./client/remove_accounts
