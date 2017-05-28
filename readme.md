@@ -88,6 +88,10 @@ for that would be `example.com`.
 This is the server's admin username and server's default hostname,
 joined with a '@'. This is used as part of an SSH command or Rsync.
 
+`num_sites`:
+
+This is the number of sites to create.
+
 ### Create the private_key file
 
 When the EC2 instance was created, it prompted you to download a PEM file.
@@ -127,3 +131,12 @@ The above command adds 2 sites to the server.
 Now visit: site1.example.com, or whatever your first site is called.
 
 You should see a webpage with the words "Welcome to site1.example.com!"
+
+### Remove web accounts
+
+The web accounts will be removed automatically, after 3 hours, but if you
+would like to remove the right away, run this:
+
+```shell
+./script/remote/remove_sites
+```

@@ -7,7 +7,6 @@ project_dir=`pwd`
 
 config_file=$project_dir/config
 test -f $config_file || die "No $config_file file found"
-
 eval `cat config`
 
 rsync -av \
