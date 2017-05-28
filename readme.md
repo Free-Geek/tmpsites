@@ -5,7 +5,7 @@ This is very useful for a classroom situation for teaching the basics of web dev
 
 The web accounts are automatically deleted after 3 hours.
 
-This has only been tested with Amazon EC2, with an Ubuntu 14.04 "tiny" instance.
+This has only been tested with Amazon EC2, with an Ubuntu 16.04 "micro" instance.
 
 There are also a set of scripts that need to executed locally. These have only been tested on macOS 10.12.
 
@@ -27,7 +27,7 @@ corresponding to each user account.
 
 Amazon EC2 is the only tested provider at this time. Other providers may work too (see below).
 
-Create a tiny instance with Ubuntu 14.04. By default, it will have very limited network access,
+Create a micro instance with Ubuntu 16.04. By default, it will have very limited network access,
 based on your IP address at the time of creation. This is not sufficient for tmpsites. Here's how to open access to the world:
 
 * Add a new security group, named 'all-access'
@@ -37,7 +37,7 @@ based on your IP address at the time of creation. This is not sufficient for tmp
 ### Other providers
 
 Making this work with other providers should be no problem, as long as the
-OS distribution is Ubuntu 14.04. Make sure that the default account on the server can run unlimited sudo commands without a password.
+OS distribution is Ubuntu 16.04. Make sure that the default account on the server can run unlimited sudo commands without a password.
 
 Unless your provider already does so for you, you may need to generate an
 SSH keypair, and upload the public key to the server.
@@ -108,7 +108,7 @@ a password.
 Write the private key to `private_key`. Change the permissions of it to 0600:
 
 ```shell
-chmod 600 private_key
+chmod 400 private_key
 ```
 
 ### Provision the server
