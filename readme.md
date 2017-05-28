@@ -106,9 +106,8 @@ cp config.sample config
 
 Edit the file and change the settings:
 
-`root_hostname`: Let's say one of the sites generated is `site1.example.com`. The root hostname
-for that would be `example.com`. Of course, you will need to have `example.com`
-registered.
+`root_hostname`: Let's say the site hostnames are `site1.example.com`, `site2.example.com`, `site3.example.com`, etc. The `root_hostname`
+would be `example.com`. Of course, you will need to have `example.com` registered.
 
 `ssh_remote`: This is the server's admin username and server's default hostname,
 joined with a '@'. This is used as part of an SSH command or Rsync.
@@ -124,7 +123,7 @@ When the EC2 instance was created, it prompted you to download a PEM file.
 This file is an SSH private key used to login to the server via SSH without
 a password.
 
-Write the private key to `private_key`. Change the permissions of it to 0600:
+Write the private key to a file called `private_key`, in this directory. Change the permissions of it to 0400:
 
 ```shell
 chmod 400 private_key
@@ -135,7 +134,7 @@ chmod 400 private_key
 Run the following:
 
 ```shell
-./client/provision
+client/provision
 ```
 
 This installs the dependencies, such as
@@ -151,7 +150,7 @@ accounts that have expired, and it deletes them.
 Run the following:
 
 ```shell
-./client/add_accounts
+client/add_accounts
 ```
 
 The above command adds sites to the server. The number of sites is
@@ -170,5 +169,5 @@ The web accounts will be removed automatically, after 3 hours, or after whatever
 would like to remove them right away, run this:
 
 ```shell
-./client/remove_accounts
+client/remove_accounts
 ```
