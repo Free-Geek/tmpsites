@@ -1,13 +1,13 @@
 ## What
 
-This is a server-based platform that creates temporary, disposable web hosting accounts, with individual SFTP access.
+`tmpsites` is a set of scripts that remotely creates temporary, disposable web hosting accounts, with individual SFTP access.
 This is very useful for a classroom situation for teaching the basics of web development.
 
 The web accounts are automatically deleted after 3 hours.
 
-This has only been tested with Amazon EC2, with an Ubuntu 16.04 "micro" instance.
+The server-side scripts have been tested with Amazon EC2, with an Ubuntu 16.04 "micro" instance.
 
-There are also a set of scripts that need to executed locally. These have only been tested on macOS 10.12.
+The client-side scripts have been tested on macOS 10.12.
 
 ## How it works
 
@@ -28,16 +28,22 @@ corresponding to each user account.
 Amazon EC2 is the only tested provider at this time. Other providers may work too (see below).
 
 Create a micro instance with Ubuntu 16.04. By default, it will have very limited network access,
-based on your IP address at the time of creation. This is not sufficient for tmpsites. Here's how to open access to the world:
+based on your IP address at the time of creation. If you use the creation wizard
+to create the instance, you will have the opportunity near the end of the wizard
+to open ports 22 and 80 to all address. If you didn't do that, after the fact:
 
+* In the EC2 console left navigation menu, find "Network & Security", and select "Security Groups".
 * Add a new security group, named 'all-access'
 * Grant TCP access to port 22 and 80 to all IP addresses
+* Go back to the EC2 instances list, and select your instance. Under the "Actions" dropdown,
+  select "Networking", and then "Change Security Groups".
 * Assign the instance to the new security group
 
 ### Other providers
 
-Making this work with other providers should be no problem, as long as the
-OS distribution is Ubuntu 16.04. Make sure that the default account on the server can run unlimited sudo commands without a password.
+Making this work with other providers shouldn't be much problem, as long as the
+OS distribution is Ubuntu 16.04 or similar.
+Make sure that the default account on the server can run unlimited sudo commands without a password.
 
 Unless your provider already does so for you, you may need to generate an
 SSH keypair, and upload the public key to the server.
