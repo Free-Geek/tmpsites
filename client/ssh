@@ -9,7 +9,7 @@ function die {
 
 cd `dirname "$0"`
 this_dir=`pwd`
-cd ../../
+cd ../
 project_dir=`pwd`
 ssh=`which ssh`
 

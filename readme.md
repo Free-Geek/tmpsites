@@ -11,8 +11,8 @@ There are also a set of scripts that need to executed locally. These have only b
 
 ## How it works
 
-1. `scripts/remote/provision` provisions a server with the necessary base software and configuration.
-2. `scripts/remote/add_sites` creates user accounts and corresponding web configurations.
+1. `client/provision` provisions a server with the necessary base software and configuration.
+2. `client/add_sites` creates user accounts and corresponding web configurations.
   Then it prints the usernames and their generated passwords for distribution.
 
 The usernames of the accounts created will have the form "siteN", where N is a number
@@ -116,7 +116,7 @@ chmod 400 private_key
 Run the following:
 
 ```shell
-./scripts/remote/provision
+./client/provision
 ```
 
 This installs the dependencies, such as nginx and mysecureshell,
@@ -130,7 +130,7 @@ accounts that have expired, and it deletes them.
 Run the following:
 
 ```shell
-./scripts/remote/add_sites
+./client/add_sites
 ```
 
 The above command adds sites to the server. The number of sites is

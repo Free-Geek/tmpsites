@@ -2,7 +2,7 @@
 
 cd `dirname "$0"`
 this_dir=`pwd`
-cd ../../
+cd ../
 project_dir=`pwd`
 
 config_file=$project_dir/config
@@ -11,6 +11,6 @@ eval `cat config`
 
 rsync -av \
   -e "ssh -i ./private_key" \
-  ./scripts/server/ \
+  ./server/ \
   ./config \
   "$ssh_remote:~/scripts/"
