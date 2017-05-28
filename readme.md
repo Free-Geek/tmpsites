@@ -5,7 +5,9 @@ This is very useful for a classroom situation for teaching the basics of web dev
 
 The web accounts are automatically deleted after 3 hours.
 
-This has only been tested with Amazon EC2, with an Ubuntu 14.04 "tiny" instance.
+For the server, this has only been tested with Amazon EC2, with an Ubuntu 14.04 "tiny" instance.
+
+There are also a set of scripts that need to executed locally. These have only been tested on macOS 10.12.
 
 ## How it works
 
@@ -81,7 +83,8 @@ Edit the file and change the settings:
 `root_hostname`:
 
 Let's say one of the sites generated is `site1.example.com`. The root hostname
-for that would be `example.com`.
+for that would be `example.com`. Of course, you will need to have `example.com`
+registered.
 
 `ssh_remote`:
 
@@ -128,10 +131,11 @@ accounts that have expired, and it deletes them.
 Run the following:
 
 ```shell
-./scripts/remote/add_sites 2
+./scripts/remote/add_sites
 ```
 
-The above command adds 2 sites to the server.
+The above command adds sites to the server. The number of sites is
+dependent on `num_sites`, in the `config` file.
 
 Now visit: site1.example.com, or whatever your first site is called.
 
