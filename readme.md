@@ -5,7 +5,7 @@ This is very useful for a classroom situation for teaching the basics of web dev
 
 The web accounts are automatically deleted after 3 hours.
 
-For the server, this has only been tested with Amazon EC2, with an Ubuntu 14.04 "tiny" instance.
+This has only been tested with Amazon EC2, with an Ubuntu 14.04 "tiny" instance.
 
 There are also a set of scripts that need to executed locally. These have only been tested on macOS 10.12.
 
@@ -25,11 +25,10 @@ corresponding to each user account.
 
 ### Using Amazon EC2
 
-Amazon EC2 is the only tested provider at this time.
+Amazon EC2 is the only tested provider at this time. Other providers may work too (see below).
 
-Create a tiny instance with Ubuntu 14.04. By default, it will have very limited access,
-based on your IP address at the time of creation. This will not work
-for the purpose of Weblearn. Here's how to open access to the world:
+Create a tiny instance with Ubuntu 14.04. By default, it will have very limited network access,
+based on your IP address at the time of creation. This is not sufficient for tmpsites. Here's how to open access to the world:
 
 * Add a new security group, named 'all-access'
 * Grant TCP access to port 22 and 80 to all IP addresses
@@ -141,9 +140,12 @@ Now visit: site1.example.com, or whatever your first site is called.
 
 You should see a webpage with the words "Welcome to site1.example.com!"
 
+If there were sites already created, they will be deleted to make
+way for the new ones.
+
 ### Remove web accounts
 
-The web accounts will be removed automatically, after 3 hours, but if you
+The web accounts will be removed automatically, after 3 hours, or after whatever `sites_ttl` is set to, but if you
 would like to remove the right away, run this:
 
 ```shell
