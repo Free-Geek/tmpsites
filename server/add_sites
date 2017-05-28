@@ -1,5 +1,9 @@
 #!/bin/bash -e
 
+#
+# Add the web hosting accounts
+#
+
 cd
 source ./scripts/functions
 read_config

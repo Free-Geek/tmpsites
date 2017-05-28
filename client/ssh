@@ -1,6 +1,8 @@
 #!/bin/bash
 
+#
 # Wrapper around ssh, that knows how to connect to the remote instance
+#
 
 function die {
   echo "$0" >&2

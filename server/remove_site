@@ -1,5 +1,9 @@
 #!/bin/bash -e
 
+#
+# Remove a hosting account by the given username
+#
+
 cd
 source ./scripts/functions
 read_config

@@ -1,5 +1,9 @@
 #!/bin/bash -e
 
+#
+# Provision the server
+#
+
 echo "Provisioning..."
 
 function install_prerequisites {

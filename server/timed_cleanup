@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# Called by cron, looks for and removes web hosting accounts
+# that have expired.
+#
+
 # Close STDOUT file descriptor
 exec 1<&-
 # Close STDERR FD

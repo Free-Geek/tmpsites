@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Remove all web hosting accounts
+#
+
 cd
 
 test -f ~/sites || exit 0

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Remove existing web hosting accounts
+#
+
 cd `dirname "$0"`
 cd ../
 ./client/ssh "./scripts/remove_sites"

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Provision a server with base software and configuration
+#
+
 function die {
   echo "$0" >&2
   exit 1

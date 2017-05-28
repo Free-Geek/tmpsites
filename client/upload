@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Upload all server files to the server
+#
+
 cd `dirname "$0"`
 this_dir=`pwd`
 cd ../
