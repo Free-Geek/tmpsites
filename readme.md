@@ -105,11 +105,11 @@ registered.
 This is the server's admin username and server's default hostname,
 joined with a '@'. This is used as part of an SSH command or Rsync.
 
-`num_sites`:
+`num_accounts`:
 
 This is the number of sites to create.
 
-`sites_ttl`:
+`accounts_ttl`:
 
 Amount of time the website accounts have to live. The format of this setting
 is exactly the format used in the `date` command to calculate date arithmetic.
@@ -140,7 +140,7 @@ and configures them.
 It also installs the crontab that regularly checks for web hosting
 accounts that have expired, and it deletes them.
 
-### Add sites
+### Add web accounts
 
 Run the following:
 
@@ -149,18 +149,18 @@ Run the following:
 ```
 
 The above command adds sites to the server. The number of sites is
-dependent on `num_sites`, in the `config` file.
+dependent on `num_accounts`, in the `config` file.
 
 Now visit: site1.example.com, or whatever your first site is called.
 
 You should see a webpage with the words "Welcome to site1.example.com!"
 
-If there were sites already created, they will be deleted to make
+If there were sites already created before, they will be deleted to make
 way for the new ones.
 
 ### Remove web accounts
 
-The web accounts will be removed automatically, after 3 hours, or after whatever `sites_ttl` is set to, but if you
+The web accounts will be removed automatically, after 3 hours, or after whatever `accounts_ttl` is set to, but if you
 would like to remove the right away, run this:
 
 ```shell

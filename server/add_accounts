@@ -9,10 +9,10 @@ source ./scripts/functions
 read_config
 
 if [ ! -z "$1" ]; then
-  num_sites="$1"
+  num_accounts="$1"
 fi
-if [ ! "$num_sites" -gt 0 ]; then
-  echo "Invalid num_sites: $num_sites"
+if [ ! "$num_accounts" -gt 0 ]; then
+  echo "Invalid num_accounts: $num_accounts"
   exit 2
 fi
 
@@ -26,7 +26,7 @@ function remove_previous_sites {
 function build_sites_list {
   ( test -f ~/sites && rm ~/sites ) || /bin/true
   n=1
-  while [[ $n -le $num_sites ]]; do
+  while [[ $n -le $num_accounts ]]; do
     echo "site$n" >> ~/sites
     n=$((n+1))
   done

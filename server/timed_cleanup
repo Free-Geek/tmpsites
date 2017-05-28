@@ -25,12 +25,12 @@ fi
 
 source $HOME/script/functions
 
-# Import $sites_ttl
+# Import $accounts_ttl
 read_config
 
 created_at=`stat $HOME/sites | grep Change | sed 's/Change: //'`
 echo "`date` created_at=$created_at"
-expire_at=`date -d "$created_at+$sites_ttl"`
+expire_at=`date -d "$created_at+$accounts_ttl"`
 echo "`date` expire_at=$expire_at"
 expire_at_int=`date -d "$expire_at" +%s`
 now_int=`date +%s`
