@@ -23,6 +23,13 @@ corresponding to each user account.
 
 ## Instructions
 
+### Clone this repo
+
+```shell
+git clone https://github.com/moxley/tmpsites.git
+cd tmpsites
+```
+
 ### Using Amazon EC2
 
 Amazon EC2 is the only tested provider at this time. Other providers may work too (see below).
@@ -38,6 +45,8 @@ to open ports 22 and 80 to all address. If you didn't do that, after the fact:
 * Go back to the EC2 instances list, and select your instance. Under the "Actions" dropdown,
   select "Networking", and then "Change Security Groups".
 * Assign the instance to the new security group
+
+You will need the PEM file that was offered to you for download.
 
 ### Other providers
 
