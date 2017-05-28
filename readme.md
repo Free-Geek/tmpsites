@@ -158,7 +158,10 @@ dependent on `num_accounts`, in the `config` file.
 
 Now visit: `site1.example.com`, or whatever your first site is called.
 
-You should see a webpage with the words "Welcome to site1.example.com!"
+You should see a webpage with the words "Welcome to site1.example.com!".
+If instead you see something like "This site can’t be reached", it either means
+the DNS configuration hasn't propagated yet, or it is configured incorrectly.
+If it hasn't propagated, you'll have to wait for it to finish.
 
 If there were sites already created before, they will be deleted to make
 way for the new ones.
