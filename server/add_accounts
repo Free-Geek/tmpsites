@@ -19,7 +19,7 @@ fi
 function remove_previous_sites {
   cd
   if [ -f ~/sites ]; then
-    ./scripts/remove_sites
+    ./scripts/remove_accounts
   fi
 }
 
@@ -42,7 +42,7 @@ function generate_password {
   openssl rand -base64 32 | sed 's|^\(.....\).*|\1|'
 }
 
-function add_site_user {
+function add_user {
   name=$1
   password=`generate_password`
   sudo useradd -m -s /usr/bin/mysecureshell $name
@@ -50,7 +50,7 @@ function add_site_user {
   echo "$name:$password" >> ~/passwords
 }
 
-function configure_site_web {
+function configure_vhost {
   name=$1
   hostname="$name.$root_hostname"
 
@@ -88,8 +88,8 @@ function web_sample_files {
 
 function configure_site {
   name=$1
-  add_site_user $name
-  configure_site_web $name
+  add_user $name
+  configure_vhost $name
   web_directory $name
   web_sample_files $name
 }

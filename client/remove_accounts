@@ -6,4 +6,4 @@
 
 cd `dirname "$0"`
 cd ../
-./client/ssh "./scripts/remove_sites"
+./client/ssh "./scripts/remove_accounts"

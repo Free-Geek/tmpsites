@@ -26,4 +26,4 @@ if [ ! "$num_sites" -gt 0 ]; then
 fi
 
 ./client/upload || die "Failed to upload"
-./client/ssh "./scripts/add_sites $num_sites" || die "Failed to add sites"
+./client/ssh "./scripts/add_accounts $num_sites" || die "Failed to add sites"

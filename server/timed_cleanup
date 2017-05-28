@@ -35,9 +35,9 @@ echo "`date` expire_at=$expire_at"
 expire_at_int=`date -d "$expire_at" +%s`
 now_int=`date +%s`
 if [ $now_int -gt $expire_at_int ]; then
-  echo "`date` Calling remove_sites"
+  echo "`date` Calling remove_accounts"
   echo "`date` CLEANUP" >> $HOME/cleanup_detail.log
-  $HOME/scripts/remove_sites >> $HOME/cleanup_detail.log 2>&1
+  $HOME/scripts/remove_accounts >> $HOME/cleanup_detail.log 2>&1
 else
   echo "`date` Sites are not expired"
 fi

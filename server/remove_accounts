@@ -9,6 +9,6 @@ cd
 test -f ~/sites || exit 0
 
 while read site; do
-  ./scripts/remove_site $site
+  ./scripts/remove_account $site
 done < ~/sites
 rm ~/sites
