@@ -1,0 +1,13 @@
+function die {
+  echo "$0" >&2
+  exit 1
+}
+
+function read_config {
+  cd
+  config_file=./scripts/config
+  test -f $config_file || die "No $config_file file found"
+
+  # Imports $root_hostname
+  eval `cat $config_file`
+}

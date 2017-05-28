@@ -92,6 +92,11 @@ joined with a '@'. This is used as part of an SSH command or Rsync.
 
 This is the number of sites to create.
 
+`sites_ttl`:
+
+Amount of time the website accounts have to live. The format of this setting
+is exactly the format used in the `date` command to calculate date arithmetic.
+
 ### Create the private_key file
 
 When the EC2 instance was created, it prompted you to download a PEM file.

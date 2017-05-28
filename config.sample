@@ -1,3 +1,4 @@
 root_hostname=example.com
 ssh_remote=ubuntu@ec2-10-10-10-10.us-west-2.compute.amazonaws.com
 num_sites=2
+sites_ttl="3 hours"

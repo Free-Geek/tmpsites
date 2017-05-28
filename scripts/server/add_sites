@@ -1,14 +1,8 @@
 #!/bin/bash -e
 
-function die {
-  echo "$0" >&2
-  exit 1
-}
-
 cd
-config_file=./scripts/config
-test -f $config_file || die "No $config_file file found"
-eval `cat $config_file`
+source ./scripts/functions
+read_config
 
 if [ ! -z "$1" ]; then
   num_sites="$1"
@@ -17,15 +11,6 @@ if [ ! "$num_sites" -gt 0 ]; then
   echo "Invalid num_sites: $num_sites"
   exit 2
 fi
-
-function read_config {
-  cd
-  config_file=./scripts/config
-  test -f $config_file || die "No $config_file file found"
-
-  # Imports $root_hostname
-  eval `cat $config_file`
-}
 
 function remove_previous_sites {
   cd
