@@ -10,4 +10,4 @@ read_config
 
 name=$1
 sudo rm -rf /var/www/$name.$root_hostname || /bin/true
-sudo deluser $name --force --remove-home || /bin/true
+sudo userdel --remove --force $name || /bin/true
