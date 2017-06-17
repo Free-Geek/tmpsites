@@ -23,7 +23,7 @@ if [ ! -f $HOME/sites ]; then
   exit 0
 fi
 
-source $HOME/script/functions
+source $HOME/scripts/functions
 
 # Import $accounts_ttl
 read_config
