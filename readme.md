@@ -37,33 +37,33 @@ cd tmpsites
 
 Amazon EC2 is the only tested provider at this time. Other providers may work too (see below).
 
-Create a micro instance with Ubuntu 16.04. Complete all the
-steps of the creation process, rather than skipping to
-the end.
+Create an AWS account if one is not yet created.
 
-By default, it will have very limited network access,
-based on your IP address at the time of creation. If you use the creation wizard
-to create the instance, you will have the opportunity near the end of the wizard
-to open ports 22 and 80 to all address. If you didn't do that, after the fact:
+#### Detailed Instructions for Creating an EC2 Instance
 
-* In the EC2 console left navigation menu, find "Network & Security", and select "Security Groups".
-* Add a new security group, named 'all-access'
-* Grant TCP access to port 22 and 80 to all IP addresses
-* Go back to the EC2 instances list, and select your instance. Under the "Actions" dropdown,
-  select "Networking", and then "Change Security Groups".
-* Assign the instance to the new security group
-
-At the end of the instance creation, you will be prompted to either provide an SSH public key or
-download a generated PEM file. If you're not sure, just download the PEM file.
-
-### Other providers
-
-Making this work with other providers shouldn't be much problem, as long as the
-OS distribution is Ubuntu 16.04 or similar.
-Make sure that the default account on the server can run unlimited sudo commands without a password.
-
-You will also need to have an SSH key-pair in place,
-as described [here](http://www.linuxproblem.org/art_9.html).
+1. Open the AWS console.
+2. Search or select the EC2 service.
+3. Find and click the blue "Launch Instance" button, selecting "Launch Instance" from its dropdown.
+4. From the list of operating systems, choose Ubuntu Server 16.04 LTS
+5. From the Instance Type page, choose "t2.micro", and click the "Next: Configure Instance Details" button.
+6. Leave the default settings and click the "Next: Add Storage" button.
+7. Leave the default settings and click the "Next: Add Tags" button.
+8. Leave the default settings and click the "Next: Configure Security Group" button.
+9. In the "Configure Security Group" page, ensure there is a rule for:
+  * Type: SSH
+  * Protocol: TCP
+  * Port Range: 22
+  * Source: Anywhere (leave the address with the default value)
+10. Still on the "Configure Security Group" page, click "Add Rule", and set the rule up with the following settings:
+  * Type: HTTP
+  * Leave the remaining defaults as they are
+11. Ignore the warnings about security.
+12. Click "Review and Launch"
+13. On the "Review Instance Launch" page, click "Launch".
+14. In the pop-up window, select "Create a new key pair", and give it a name.
+15. Click "Download Key Pair".
+16. Save the file to the folder that has this readme file, and name it `private_key`.
+17. Click "Launch Instances".
 
 ### DNS Configuration
 
@@ -116,18 +116,6 @@ joined with a '@'. This is used as part of an SSH command or Rsync.
 
 `accounts_ttl`: Amount of time the website accounts have to live. The format of this setting
 is exactly the format used in the `date` command to calculate date arithmetic.
-
-### Create the private_key file
-
-When the EC2 instance was created, it prompted you to download a PEM file.
-This file is an SSH private key used to login to the server via SSH without
-a password.
-
-Write the private key to a file called `private_key`, in this directory. Change the permissions of it to 0400:
-
-```shell
-chmod 400 private_key
-```
 
 ### Provision the server
 
