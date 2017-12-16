@@ -19,6 +19,24 @@ function configure_sshd {
   fi
 }
 
+function configure_sftp {
+  file=/etc/ssh/sftp_config
+  sudo perl -p -i \
+    -e 's/LimitConnection\b.*/LimitConnection         20      #max connection for the server sftp/' \
+    $file
+
+  sudo perl -p -i \
+    -e 's/LimitConnectionByUser\b.*/LimitConnectionByUser   20      #max connection for the account/' \
+    $file
+
+  sudo perl -p -i \
+    -e 's/LimitConnectionByIP\b.*/LimitConnectionByIP     20      #max connection by ip for the account/' \
+    $file
+
+  sudo /etc/init.d/ssh restart
+}
+
 install_prerequisites
 configure_sshd
+configure_sftp
 crontab $HOME/scripts/files/crontab
